@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    resource_group: myResourceGroup
+  tasks:
+  - name: Scenario 1
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ item.name }}"
+      allocated: "{{ item.status }}"
+    loop:
+      - { name: myVM, status: False }

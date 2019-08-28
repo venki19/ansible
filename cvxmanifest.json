@@ -1,0 +1,24 @@
+{
+    "$schema": "https://artifactory.chevron.com:443//schemas/v1/ApplicationManifest.json",
+	"costElement": "FCS11596",
+	"companyCode": "0845",
+	"ownerEmail": "morgan.watson@parivedasolutions.com",
+	"application": {
+		"name": "DevTestLabs_DC_Demo",
+		"shortName": "demo",
+		"serviceId": 99999,
+		"securityTier": 3
+	},
+	"baseUrl": "demo",
+	"environments": {
+		"dev": {
+			"dnsDomain": "testing.chevron.net",
+			"azure": {
+				"subscription": "3fe02f66-a68a-4cc3-bf2e-625e5be45301",
+				"defaultRegion": "southcentralus",
+				"resourceGroup": "testing",
+				"appId": "e81c0688-d979-4640-afea-2f69f79eb07a"
+			}
+		}
+	}
+}

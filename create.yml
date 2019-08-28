@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+
+  roles:
+    - role: ansible-role-azure-iaas
+      azure_iaas_vm_role: lin
+      azure_iaas_artifactory_public: True
+      azure_iaas_cert_names: []
+      azure_iaas_base_image: centos7
+
+    - role: ansible-role-azure-iaas
+      azure_iaas_vm_role: win
+      azure_iaas_artifactory_public: True
+      azure_iaas_cert_names: []

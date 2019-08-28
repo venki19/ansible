@@ -1,0 +1,30 @@
+--- 
+- 
+  connection: local
+  hosts: localhost
+  name: "Stop the list of below Azure VM's"
+  tasks: 
+    - 
+      azure_rm_virtualmachine: 
+        name: "{{ item }}"
+        resource_group: "{{ resource_group_name }}"
+        started: false
+        with_items: "{{ list_of_vms }}"
+      name: "Shut down the virtual machines"
+    - 
+      azure_rm_virtualmachine: 
+        name: "{{ item }}"
+        remove_on_absent: all_autocreated
+        resource_group: "{{ resource_group_name }}"
+        state: absent
+        with_items: "{{ list_of_vms }}"
+      name: "removing the list of virtual machines"
+  vars: 
+    list_of_vms: 
+      - vm001
+      - vm002
+      - vm003
+      - vm004
+      - vm005
+    resource_group_name: my_azzure_resource_group_name
+

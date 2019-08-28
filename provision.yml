@@ -1,0 +1,45 @@
+---
+- hosts: linux
+  become: yes
+
+  roles:
+    - role: ansible-role-get-manifest
+
+  tasks:
+    - name: update chevron yum repo patch files
+      replace:
+        path: /etc/yum.repos.d/{{ item }}
+        regexp: "{{ internal_artifactory_url }}"
+        replace: "{{ cvx_artifactory_public_url_authenticated }}"  
+      vars:
+        internal_artifactory_url: "https://artifactory.azure.chevron.com"
+      with_items:
+        - CHVPATCH-CentOS-Base.repo
+        - CHVPATCH-CentOS-CR.repo
+        - CHVPATCH-CentOS-fasttrack.repo
+  
+  post_tasks:
+    - include_role:
+        name: ansible-role-join-domain
+      vars:
+        dns_server_override_config:
+          client_id: "{{ cvx_az_client_id }}"
+          secret: "{{ cvx_az_client_secret }}"
+          tenant: "{{ tenant_id }}"
+          subscription: "{{ dc_subscription }}"
+          resource_group: "{{ dc_resource_group }}"
+          tags:
+            - "AppRole:dc"
+
+- hosts: windows
+  roles: 
+    - role: ansible-role-join-domain
+      dns_server_override_config:
+        client_id: "{{ cvx_az_client_id }}"
+        secret: "{{ cvx_az_client_secret }}"
+        tenant: "{{ tenant_id }}"
+        subscription: "{{ dc_subscription }}"
+        resource_group: "{{ dc_resource_group }}"
+        tags:
+          - "AppRole:dc"
+        

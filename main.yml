@@ -1,0 +1,4 @@
+---
+# Use the create.yml playbook to define the resources for your application
+- import_playbook: create.yml
+- import_playbook: provision.yml
